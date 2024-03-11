@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+
+        <record id="checkbook_payment_check_tree" model="ir.ui.view">
+            <field name="name">view.checkbook.payment.check.tree</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="l10n_latam_check.view_account_third_party_check_tree"></field>
+	    <field name="arch" type="xml">
+		    <field name="l10n_latam_check_current_journal_id" position="after" >
+			<field name="checkbook_type" optional="hide" />
+			<field name="endosable" optional="hide" />
+		    </field>
+            </field>
+        </record>
+
+
+
+        <record id="checkbook_payment_form" model="ir.ui.view">
+            <field name="name">view.checkbook.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"></field>
+	    <field name="arch" type="xml">
+		<field name="payment_method_line_id" position="after">
+			<field name="checkbook_id"
+				options="{'no_create': True, 'no_create_edit':True}"
+				invisible="not show_check_number"
+				domain="[('journal_id','=',journal_id),('state','=','active')]" />
+			<field name="display_checkbook_type" invisible="1 == 1"/>
+			<field name="checkbook_type" invisible="display_checkbook_type == False" />
+			<field name="endosable" invisible="display_checkbook_type == False" />
+		</field>
+		<field name="check_number" position="attributes">
+			<attribute name="invisible">state == 'draft' or (state != 'draft' and not checkbook_id)</attribute>
+		</field>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
