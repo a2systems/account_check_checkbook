@@ -15,6 +15,7 @@
              'security/ir.model.access.csv',
              'views/journal_view.xml',
              'views/payment_view.xml',
+             'wizard/payment_register_view.xml',
     ],
     'test': [
     ],
