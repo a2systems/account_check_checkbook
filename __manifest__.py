@@ -4,6 +4,7 @@
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
+    'version': '16.0.1',
     'license': 'AGPL-3',
     'images': [
     ],
