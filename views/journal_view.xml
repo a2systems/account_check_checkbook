@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="account.view_account_journal_form"></field>
 	    <field name="arch" type="xml">
 		<xpath expr="//notebook" position="inside">
-		    	<page string="Chequeras" invisible="type != 'bank'">
+			<page string="Chequeras" attrs="{'invisible': [('type','!=','bank')]}">
 				<br />
 				<group>
 					<field name="checkbook_ids" >

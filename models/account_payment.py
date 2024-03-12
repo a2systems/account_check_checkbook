@@ -16,12 +16,20 @@ class AccountPayment(models.Model):
                     res = True
             rec.display_checkbook_type = res
 
+    def _compute_display_check_number(self):
+        for rec in self:
+            res = False
+            if rec.state == 'posted' and rec.checkbook_id:
+                res = True
+            rec.display_check_number = res
+
 
     checkbook_id = fields.Many2one('account.checkbook',string='Chequera')
     checkbook_type = fields.Selection(selection=[('physical','Fisico'),('electronic','Electronico')],
             string='Tipo de cheque')
     endosable = fields.Boolean('Endosable')
     display_checkbook_type = fields.Boolean('display_check_type',compute=_compute_display_checkbook_type,store=True)
+    display_check_number = fields.Boolean('display_check_number',compute=_compute_display_check_number)
 
     def action_post(self):
         res = super(AccountPayment, self).action_post()
