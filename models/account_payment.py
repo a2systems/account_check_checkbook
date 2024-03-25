@@ -1,5 +1,5 @@
 from odoo import tools,fields, models, api, _
-
+from odoo.exceptions import ValidationError
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
@@ -37,10 +37,11 @@ class AccountPayment(models.Model):
             if rec.check_number and rec.payment_type == 'outbound':
                 if not rec.checkbook_id:
                     raise ValidationError('Por favor seleccione una chequera')
-                if not rec.checkbook_id.sequence_id:
-                    raise ValidationError('Chequera sin secuencia')
-                seq = rec.checkbook_id.sequence_id._next()
+                #seq = rec.checkbook_id.sequence_id._next()
+                seq = rec.checkbook_id.get_next_check()
                 rec.check_number = seq
                 rec.checkbook_type = rec.checkbook_id.checkbook_type
+                checkbook_id = rec.checkbook_id
+                checkbook_id.next_number = seq
         return res
     
