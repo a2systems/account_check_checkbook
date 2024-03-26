@@ -37,7 +37,8 @@ class AccountPayment(models.Model):
             if rec.check_number and rec.payment_type == 'outbound':
                 if not rec.checkbook_id:
                     raise ValidationError('Por favor seleccione una chequera')
-                #seq = rec.checkbook_id.sequence_id._next()
+                #sequence_id = self.env['ir.sequence'].search([('code','=','GUSTAVO')])
+                #seq = sequence_id._next()
                 seq = rec.checkbook_id.get_next_check()
                 rec.check_number = seq
                 rec.checkbook_type = rec.checkbook_id.checkbook_type

@@ -30,6 +30,17 @@ class AccountCheckbook(models.Model):
     def unlink(self):
         raise ValidationError('No se puede borrar la chequera, marquela como inactiva por favor')
 
+    @api.constrains('next_number')
+    def check_next_number(self):
+        if self.next_number:
+            checks = self.env['account.payment'].search(
+                [('state','=','posted'),('checkbook_id','=',self.id),('journal_id','=',self.journal_id.id)],
+                )
+            for check in checks:
+                if int(check.check_number) > self.next_number:
+                    raise ValidationError('Hay cheques con numberacion mayor a %s'%(self.next_number))
+
+
     name = fields.Char('Nombre')
     journal_id = fields.Many2one('account.journal',string='Diario')
     sequence_id = fields.Many2one('ir.sequence',string='Secuencia')
