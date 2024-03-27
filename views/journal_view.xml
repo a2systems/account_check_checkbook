@@ -14,7 +14,8 @@
 					<field name="checkbook_ids" >
 						<tree editable="bottom">
 							<field name="name" />
-							<field name="sequence_id" />
+							<field name="sequence_id" invisible="1"/>
+							<field name="next_number"/>
 							<field name="checkbook_type" />
 							<field name="state" />
 						</tree>
